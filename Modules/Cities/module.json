@@ -1,0 +1,12 @@
+{
+    "name": "Cities",
+    "alias": "cities",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Cities\\Providers\\CitiesServiceProvider",
+        "Modules\\Cities\\Providers\\RouteServiceProvider"
+    ],
+    "files": []
+}

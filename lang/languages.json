@@ -1,0 +1,6 @@
+{
+    "available": [
+        { "value": "en", "label": "English", "flag": "US" },
+        { "value": "ro", "label": "Romanian", "flag": "RO" }
+    ]
+}

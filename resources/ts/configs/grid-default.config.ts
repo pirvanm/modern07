@@ -1,0 +1,48 @@
+import { GridProps } from '@progress/kendo-vue-grid/dist/es/interfaces/GridProps';
+
+export const GridDefaultConfig: GridProps = {
+  columnMenu: true,
+  resizable: true,
+  reorderable: true,
+  pageable: true,
+  sortable: true,
+  filterable: false,
+  loader: true,
+  sort: undefined,
+  skip: 0,
+  take: 15,
+  filterOperators: {
+    text: [
+      { text: 'grid.filterContainsOperator', operator: 'contains' },
+      { text: 'grid.filterNotContainsOperator', operator: 'doesnotcontain' },
+      { text: 'grid.filterEqOperator', operator: 'eq' },
+      { text: 'grid.filterNotEqOperator', operator: 'neq' },
+      { text: 'grid.filterStartsWithOperator', operator: 'startswith' },
+      { text: 'grid.filterEndsWithOperator', operator: 'endswith' },
+      { text: 'grid.filterIsNullOperator', operator: 'isnull' },
+      { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' },
+      { text: 'grid.filterIsEmptyOperator', operator: 'isempty' },
+      { text: 'grid.filterIsNotEmptyOperator', operator: 'isnotempty' },
+    ],
+    numeric: [
+      { text: 'grid.filterEqOperator', operator: 'eq' },
+      { text: 'grid.filterNotEqOperator', operator: 'neq' },
+      { text: 'grid.filterGteOperator', operator: 'gte' },
+      { text: 'grid.filterGtOperator', operator: 'gt' },
+      { text: 'grid.filterLteOperator', operator: 'lte' },
+      { text: 'grid.filterLtOperator', operator: 'lt' },
+      { text: 'grid.filterIsNullOperator', operator: 'isnull' },
+      { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' },
+    ],
+    date: [
+      { text: 'grid.filterAfterOrEqualOperator', operator: 'gte' },
+      { text: 'grid.filterAfterOperator', operator: 'gt' },
+      { text: 'grid.filterBeforeOperator', operator: 'lt' },
+      { text: 'grid.filterBeforeOrEqualOperator', operator: 'lte' },
+      { text: 'grid.filterIsNullOperator', operator: 'isnull' },
+      { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' },
+    ],
+    boolean: [{ text: 'grid.filterEqOperator', operator: 'eq' }],
+  },
+  dataItems: [],
+};

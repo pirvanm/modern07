@@ -1,0 +1,11 @@
+{
+    "name": "Openings",
+    "alias": "openings",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Openings\\Providers\\OpeningsServiceProvider"
+    ],
+    "files": []
+}

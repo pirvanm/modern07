@@ -1,0 +1,12 @@
+{
+    "Test": true,
+    "Cities": true,
+    "Shop": true,
+    "Shops": true,
+    "Users": true,
+    "Proposals": true,
+    "Partners": true,
+    "Employees": true,
+    "Companies": true,
+    "Openings": true
+}

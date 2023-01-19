@@ -1,0 +1,41 @@
+{
+    "root": true,
+    "parser": "vue-eslint-parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": false
+        },
+        "ecmaVersion": "latest"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "plugin:vue/vue3-recommended",
+        "eslint:recommended",
+        "@vue/typescript/recommended",
+        "@vue/prettier"
+    ],
+    "ignorePatterns": [
+        "vendor/**/*.js"
+    ],
+    "rules": {
+        "@tpescript-eslint/ban-ts-ignore": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ],
+        "vue/multi-word-component-names": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-multiple-empty-lines": [
+            2,
+            {
+                "max": 2
+            }
+        ],
+        "@typescript-eslint/no-non-null-assertion": "off"
+    }
+}

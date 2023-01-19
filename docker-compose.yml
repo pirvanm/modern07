@@ -1,0 +1,152 @@
+version: '3'
+
+networks:
+  intranetv2:
+
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
+
+services:
+  nginx:
+    build:
+      context: ./docker
+      dockerfile: nginx.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-laravel}
+    restart: unless-stopped
+    container_name: intranetv2-nginx
+    depends_on:
+      - mysql
+      - php
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - intranetv2
+
+  php:
+    build:
+      context: ./docker/php8.1-fpm
+      dockerfile: Dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-laravel}
+    container_name: intranetv2-php
+    ports:
+      - ':9000'
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - intranetv2
+
+  mysql:
+    build:
+      context: ./docker/mysql
+      dockerfile: Dockerfile
+    container_name: intranetv2-mysql
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - intranetv2
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-p${DB_PASSWORD}']
+      retries: 3
+      timeout: 5s
+
+  redis:
+    image: redis:alpine
+    container_name: intranetv2-redis
+    restart: unless-stopped
+    ports:
+      - 6381:6379
+    volumes:
+      - redis:/data
+    networks:
+      - intranetv2
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: intranetv2-phpmyadmin
+    hostname: localhost
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: ${DB_HOST}
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      PMA_PORT: ${DB_PORT}
+    depends_on:
+      - mysql
+    ports:
+      - 8888:80
+    networks:
+      - intranetv2
+
+  composer:
+    build:
+      context: ./docker
+      dockerfile: composer.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-laravel}
+    container_name: intranetv2-composer
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - php
+    user: ${USER:-laravel} #system user
+    profiles: ['composer']
+    entrypoint: ['composer', '--ignore-platform-reqs']
+    networks:
+      - intranetv2
+
+  artisan:
+    build:
+      context: ./docker/php8.1-fpm
+      dockerfile: Dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-laravel}
+    container_name: intranetv2-artisan
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - php
+      - mysql
+    working_dir: /var/www/html
+    profiles: ['artisan']
+    entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - intranetv2
+
+  npm:
+    image: node:alpine
+    container_name: intranetv2-npm
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 3000:3000
+      - 3001:3001
+      - 5173:5173
+    working_dir: /var/www/html
+    profiles: ['npm']
+    entrypoint: ['npm']
+    networks:
+      - intranetv2

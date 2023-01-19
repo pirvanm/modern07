@@ -1,0 +1,52 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "strict": true,
+        "jsx": "preserve",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "lib": [
+            "esnext",
+            "dom"
+        ],
+        "types": [
+            "vite/client",
+            "element-plus/global",
+            "unplugin-icons/types/vue",
+            "vue/macros-global"
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "resources/*"
+            ],
+            "~views/*": [
+                "resources/ts/*"
+            ],
+
+            "~stores/*": [
+                "resources/ts/stores/*"
+            ],
+
+            "~shared/*": [
+                "resources/shared/*"
+            ],
+
+            "ziggy-js/*": [
+                "vendor/tightenco/ziggy/dist/*"
+            ],
+            "ziggy/*": [
+                "vendor/tightenco/ziggy/dist/*"
+            ],
+        }
+    },
+    "include": [
+        "resources/**/**/*.vue",
+        "resources/**/**/*.ts",
+        "Modules/**/Resources/**/*.vue",
+        "Modules/**/Resources/**/*.ts",
+    ]
+}
